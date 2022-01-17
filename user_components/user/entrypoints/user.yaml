@@ -1,0 +1,398 @@
+swagger: "2.0"
+info:
+  title: "User Management Service"
+  description: "List of User Management Service APIs"
+  version: "1.0.0"
+consumes: 
+- "multipart/json"
+- "multipart/form-data"
+produces:
+- "application/json"
+- "applicaton/form-data"
+  
+basePath: "/share_market/api/v1"
+tags:
+- name: "user"
+  description: "Collection of user APIs"
+schemes:
+- "https"
+- "http"
+paths:
+  /register_user:
+    post:
+      tags:
+      - "user"
+      summary: " register_user"
+      description: " register_user in the system"
+      operationId: "user_components.user.entrypoints.route_handlers.user_register"
+      parameters:
+      - in: "body"
+        name: "register_user"
+        description: "register new user"
+        schema:
+          type: object
+          required: 
+          - first_name
+          - last_name
+          - email
+          - user_name
+          - password
+          - phone_number
+          - is_admin
+          - is_customer
+          - is_seller
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+            email:
+              type: string
+            user_name:
+              type: string
+            password:
+              type: string
+            phone_number:
+              type: string
+            is_admin:
+              type: boolean
+            is_customer:
+              type: boolean
+            is_seller:
+              type: boolean
+
+            
+      responses:
+        "201":
+          description: "Return user registerd"
+          schema:
+            type: "array"
+            items:
+              properties:
+                otp:
+                  type: "integer"
+               
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Page not found"
+        "405":
+          description: "Invalid input"
+  /activate_user:
+    post:
+      tags:
+      - "user"
+      summary: "user activate"
+      description: " user_activate in the system"
+      operationId: "user_components.user.entrypoints.route_handlers.user_activate"
+      parameters:
+      - in: "body"
+        name: "user_activate"
+        description: "user_activate"
+        schema:
+          type: object
+          required: 
+          - email
+          - otp
+          properties:
+            email:
+              type: string
+            otp:
+              type: number
+            
+      responses:
+        "200":
+          description: "Return user activated successfully ! please login"
+               
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Page not found"
+        "405":
+          description: "Invalid input"
+  /login_user:
+    post:
+      tags:
+      - "user"
+      summary: "login_user"
+      description: "This stores user  login in the system"
+      operationId: "user_components.user.entrypoints.route_handlers.user_login"
+      parameters:
+      - in: "body"
+        name: "user_login"
+        description: "user_login"
+        schema:
+          type: object
+          required: 
+          - email
+          - password
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+            
+      responses:
+        "200":
+          description: "Return login user successfully"
+          schema:
+            type: "array"
+            items:
+              properties:
+                token:
+                  type: "integer"
+               
+               
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Page not found"
+        "405":
+          description: "Invalid input"
+          
+  /change_password:
+    post:
+      tags:
+      - "user"
+      summary: "user change_password"
+      description: "This stores user change_password in the system"
+      operationId: "user_components.user.entrypoints.route_handlers.change_password"
+      parameters:
+      - in: "body"
+        name: "change_password"
+        description: "change_password"
+        schema:
+          type: object
+          required: 
+          - email
+          - password
+          - new_password
+          - new_password_re
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+            new_password:
+              type: string
+            new_password_re:
+              type: string
+            
+      responses:
+        "200":
+          description: "Return user change_password seccessfully"
+               
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Page not found"
+        "405":
+          description: "Invalid input"
+          
+  /forgot_password:
+    post:
+      tags:
+      - "user"
+      summary: "user forgot_password"
+      description: "This stores user forgot_password in the system"
+      operationId: "user_components.user.entrypoints.route_handlers.forgot_password"
+      parameters:
+      - in: "body"
+        name: "forgot_password"
+        description: "forgot_password"
+        schema:
+          type: object
+          required: 
+          - email
+          properties:
+            email:
+              type: string
+           
+      responses:
+        "200":
+          description: "Return user forgot_password"
+          schema:
+            type: "array"
+            items:
+              properties:
+                otp:
+                  type: "integer"
+               
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Page not found"
+        "405":
+          description: "Invalid input"
+  /resend_otp:
+    post:
+      tags:
+      - "user"
+      summary: "user resend_otp"
+      description: "this stores user resend_otp in the system"
+      operationId: "user_components.user.entrypoints.route_handlers.resend_otp"
+      parameters:
+      - in: "body"
+        name: "resend_otp"
+        description: "resend_otp"
+        schema:
+          type: object
+          required: 
+          - email
+          properties:
+            email:
+              type: string
+           
+      responses:
+        "201":
+          description: "Return user resend_otp"
+               
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Page not found"
+        "405":
+          description: "Invalid input"
+  
+  /forgot_password_update:
+    post:
+      tags:
+      - "user"
+      summary: "user forgot_password_update"
+      description: "user forgot_password_update in the system"
+      operationId: "user_components.user.entrypoints.route_handlers.forgot_password_update"
+      parameters:
+      - in: "body"
+        name: "forgot_password_update"
+        description: "forgot_password_update"
+        schema:
+          type: object
+          required: 
+          - email
+          - otp
+          - password_new
+          - password_new_re
+          properties:
+            email:
+              type: string
+            otp:
+              type: string
+            password_new:
+              type: string
+            password_new_re:
+              type: string 
+           
+      responses:
+        "200":
+          description: "Return user password  change successfully"
+               
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Page not found"
+        "405":
+          description: "Invalid input"
+  /users:
+    get:
+      tags:
+      - "user"
+      summary: "get users"
+      description: "This gives user details from the system"
+      operationId: "user_components.user.entrypoints.route_handlers.UserRoutes.get"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              properties:
+                id:
+                  type: "integer"
+                first_name:
+                  type: "string"
+                last_name:
+                  type: "number"
+                email:
+                  type: "number"
+                user_name:
+                  type: "string"
+                is_cive:
+                  type: "string"
+                phone_numbr:
+                  type: "string"
+                is_admin:
+                  type: "string"
+                is_customer:
+                  type: "string"
+                is_seller:
+                  type: "string"
+          
+        "400":
+          description: "Invalid status value"
+        "401":
+          description: "unauthorized"
+        "404":
+          description: "Page not found"
+          
+          
+  /users/{user_id}:
+    get:
+      tags:
+      - "user"
+      summary: "get users"
+      description: "This gives user details from the system"
+      operationId: "user_components.user.entrypoints.route_handlers.UserRoutes.get.user_id"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "user_id"
+        description: "retrieve users"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+          default: "available"
+
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              properties:
+                id:
+                  type: "integer"
+                first_name:
+                  type: "string"
+                last_name:
+                  type: "number"
+                email:
+                  type: "number"
+                user_name:
+                  type: "string"
+                is_cive:
+                  type: "string"
+                phone_numbr:
+                  type: "string"
+                is_admin:
+                  type: "string"
+                is_customer:
+                  type: "string"
+                is_seller:
+                  type: "string"
+          
+        "400":
+          description: "Invalid status value"
+        "401":
+          description: "unauthorized"
+        "404":
+          description: "Page not found"
+  
