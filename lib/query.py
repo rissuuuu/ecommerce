@@ -1,7 +1,8 @@
-from pydantic import BaseModel, fields, validator
 import typing
 import uuid
 from datetime import date
+
+from pydantic import BaseModel, fields, validator
 
 
 class QueryParamModel(BaseModel):

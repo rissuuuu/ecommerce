@@ -1,15 +1,17 @@
-import jwt
 import random
-from sanic import Sanic
-from user_components.user.domain import command
-from lib import unit_of_work
-from user_components.user.domain import handler, model
-from user_components.user.domain import events
-from entrypoint.redis_config.cache import caches
-from user_components.user.domain import exceptions
-from user_components.user.utils import password_manager
-from alert_components.notifications.adapters import notifications
 
+import jwt
+from sanic import Sanic
+
+from alert_components.notifications.adapters import notifications
+from entrypoint.redis_config.cache import caches
+from lib import unit_of_work
+from user_components.user.adapters.repository import OtpSqlRepository
+from user_components.user.domain import (command, events, exceptions, handler,
+                                         model)
+from user_components.user.service_layer.unit_of_work import \
+    OtpSQLAlchemyUnitofWork
+from user_components.user.utils import password_manager
 
 app = Sanic.get_app()
 
@@ -22,24 +24,42 @@ async def add_user(
     validated_data: command.AddUser,
     uow: unit_of_work.SqlAlchemyUnitOfWork,
 ):
+    # async with uow:
+    #     user_exists = await uow.repository.user_email_exists(validated_data.email)
+    #     if user_exists:
+    #         raise exceptions.UserExists("User is already exist")
+    #     else:
+    #         user = await handler.add_user(validated_data)
+    #         password_hash = await password_manager.generate_password(user.password)
+    #         await user.set_password(password_hash)
+    #         await uow.repository.add(user)
+    #         # uow.events.add(
+    #         #     events.OTPSent(
+    #         #         phone_number=validated_data.phone_number,
+    #         #         email=validated_data.email,
+    #         #         otp=otp,
+    #         #     )
+    #         # )
+    await add_otp(
+        validated_data=command.AddOtp(
+            email=validated_data.email, otp=await generate_otp()
+        ),
+        uow=OtpSQLAlchemyUnitofWork(
+            connection=app.ctx.db,
+            repository_class=OtpSqlRepository,
+        ),
+    )
+
+
+async def add_otp(
+    validated_data: command.AddOtp, uow: unit_of_work.SqlAlchemyUnitOfWork
+):
     async with uow:
-        user_exists = await uow.repository.user_email_exists(validated_data.email)
-        if user_exists:
-            raise exceptions.UserExists("User is already exist")
-        else:
-            user = await handler.add_user(validated_data)
-            password_hash = await password_manager.generate_password(user.password)
-            await user.set_password(password_hash)
-            await uow.repository.add(user)
-            otp = await generate_otp()
-            # uow.events.add(
-            #     events.OTPSent(
-            #         phone_number=validated_data.phone_number,
-            #         email=validated_data.email,
-            #         otp=otp,
-            #     )
-            # )
-        return otp
+        otp_exists = await uow.repository.otp_exists(validated_data.email)
+        print(otp_exists)
+        if not otp_exists:
+            otp = await handler.add_otp(validated_data)
+            await uow.repository.add(otp)
 
 
 async def activate_user(
@@ -48,6 +68,7 @@ async def activate_user(
 ):
     async with uow:
         cache = caches.get("redis_cache")
+        print("******cache******", cache)
         otp = await cache.get(validated_data.email)
         if not otp:
             raise exceptions.OTP_NOT_FOUND

@@ -1,7 +1,9 @@
 import json
+
 import redis
-from lib.event import Event
+
 from entrypoint import settings
+from lib.event import Event
 
 r = redis.Redis(**settings.settings_factory().redis_settings)
 

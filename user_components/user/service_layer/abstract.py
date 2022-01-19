@@ -1,4 +1,5 @@
-from pydantic import BaseModel, validator, EmailStr
+from pydantic import BaseModel, EmailStr, validator
+
 from user_components.user.domain import exceptions
 
 

@@ -1,5 +1,6 @@
 import uuid
-from typing import Dict, Any
+from typing import Any, Dict
+
 from pydantic import BaseModel
 
 
@@ -54,3 +55,13 @@ async def user_factory(
         is_customer=is_customer,
         is_seller=is_seller,
     )
+
+
+class Otp(BaseModel):
+    id_: uuid.UUID
+    email: str
+    otp: str
+
+
+async def otp_factory(email: str, otp: str) -> Otp:
+    return Otp(id_=uuid.uuid4(), email=email, otp=otp)

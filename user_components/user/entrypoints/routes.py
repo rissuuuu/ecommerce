@@ -1,4 +1,5 @@
 from sanic import Blueprint
+
 from user_components.user.entrypoints import route_handlers
 
 user = Blueprint("user", url_prefix="api/v1")

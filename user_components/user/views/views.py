@@ -1,7 +1,8 @@
 from sanic import Sanic
+
+from lib.db_connection import DbConnection
 from lib.paginator import Paginator
 from user_components.user.adapters import orm
-from lib.db_connection import DbConnection
 
 app = Sanic.get_app()
 

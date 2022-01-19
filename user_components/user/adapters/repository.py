@@ -1,5 +1,5 @@
-from lib.db_connection import DbConnection
 from lib import repository
+from lib.db_connection import DbConnection
 from user_components.user.adapters import orm
 from user_components.user.domain.model import User
 
@@ -53,3 +53,24 @@ class UserSqlRepository(repository.SqlAlchemyRepository):
             await self.db.fetch_val(orm.user.select().where(orm.user.c.email == email))
             is not None
         )
+
+
+class OtpSqlRepository(repository.SqlAlchemyRepository):
+    def __init__(self, db: DbConnection):
+        super().__init__(db)
+
+    async def _add(self, model):
+        print("here")
+        await self.db.execute(
+            query=orm.otp.insert(),
+            values={"id": model.id_, "email": model.email, "otp": model.otp},
+        )
+
+    async def otp_exists(self, email: str):
+        return (
+            await self.db.fetch_val(orm.otp.select().where(orm.otp.c.email == email))
+            is not None
+        )
+
+    async def is_otp_valid(self):
+        pass

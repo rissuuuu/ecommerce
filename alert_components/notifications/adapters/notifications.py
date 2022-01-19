@@ -1,5 +1,7 @@
 import smtplib
+
 import requests
+
 from entrypoint import settings
 from lib.notifications import AbstractNotifications
 

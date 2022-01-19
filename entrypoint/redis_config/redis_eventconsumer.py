@@ -1,8 +1,9 @@
 import asyncio
 import json
-import redis
-from entrypoint import settings
 
+import redis
+
+from entrypoint import settings
 
 r = redis.Redis(**settings.settings_factory().redis_settings)
 
@@ -19,12 +20,9 @@ async def main():
             await seller_added(data["event"])
 
 
-
 async def seller_added(data):
     print("***********************  SELLER ADDED  ******************************")
     print(data)
-
-
 
 
 if __name__ == "__main__":

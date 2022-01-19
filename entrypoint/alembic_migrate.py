@@ -1,16 +1,19 @@
-from pathlib import Path
-from alembic.config import Config
-from alembic import command
-from main import app
 import glob
-import user_components
+from pathlib import Path
+
+from alembic import command
+from alembic.config import Config
+from main import app
+
 import alert_components
+import user_components
 
 settings = app.ctx.settings
 
 
 class AlembicCommand:
     alembic_paths = []
+
     def __init__(self):
         self.alembic_paths.extend(
             glob.glob(f"{str(Path(user_components.__file__).parent)}/**/alembic.ini")

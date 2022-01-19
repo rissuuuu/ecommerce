@@ -1,5 +1,4 @@
-from user_components.user.domain import model
-from user_components.user.domain import command
+from user_components.user.domain import command, model
 
 
 async def add_user(cmd: command.AddUser):
@@ -14,6 +13,10 @@ async def add_user(cmd: command.AddUser):
         is_customer=cmd.is_customer,
         is_seller=cmd.is_seller,
     )
+
+
+async def add_otp(cmd: command.AddOtp):
+    return await model.otp_factory(email=cmd.email, otp=cmd.otp)
 
 
 async def change_password(cmd: command.ChangeUserPassword) -> model.User:

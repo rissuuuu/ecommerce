@@ -1,4 +1,4 @@
-from lib.security import generate_password_hash, check_password_hash
+from lib.security import check_password_hash, generate_password_hash
 
 
 async def generate_password(password):

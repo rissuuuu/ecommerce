@@ -1,12 +1,13 @@
+import uuid
+
 import pandas as pd
 import pytest
-import uuid
-from user_components.user.domain import model
-from user_components.user.domain import command
-from user_components.user.adapters.orm import user
 from databases import Database
-from lib.db_connection import DbConnection
+
 from entrypoint import settings
+from lib.db_connection import DbConnection
+from user_components.user.adapters.orm import user
+from user_components.user.domain import command, model
 
 
 @pytest.fixture

@@ -25,3 +25,18 @@ user = sa.Table(
         onupdate=sa.func.now(),
     ),
 )
+
+otp = sa.Table(
+    "ecom_otp",
+    SQLMETADATA,
+    sa.Column("id", postgresql.UUID(as_uuid=False), primary_key=True),
+    sa.Column("email", sa.String(255), nullable=False),
+    sa.Column("otp", sa.String(10), nullable=False),
+    sa.Column("created_at", sa.TIMESTAMP(timezone=True), default=sa.func.now()),
+    sa.Column(
+        "updated_at",
+        sa.TIMESTAMP(timezone=True),
+        default=sa.func.now(),
+        onupdate=sa.func.now(),
+    ),
+)

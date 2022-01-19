@@ -1,9 +1,11 @@
 from __future__ import annotations
-from lib.db_connection import DbConnection
-import typing
-from lib import repository
-from abc import abstractmethod
+
 import logging
+import typing
+from abc import abstractmethod
+
+from lib import repository
+from lib.db_connection import DbConnection
 
 LOGGER = logging.getLogger("logger")
 

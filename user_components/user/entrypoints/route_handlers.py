@@ -1,18 +1,17 @@
 import json
-from lib.json_encoder import jsonable_encoder
 
+from pydantic import ValidationError
+from sanic import response
 from sanic.views import HTTPMethodView
-from user_components.user.views import views
 
 from entrypoint.messagebus import messagebus
 from lib import err_msg
-from pydantic import ValidationError
-from sanic import response
+from lib.json_encoder import jsonable_encoder
 from user_components.user.adapters import repository
 from user_components.user.domain import command, exceptions
-from user_components.user.service_layer import abstract, unit_of_work
+from user_components.user.service_layer import abstract, query, unit_of_work
 from user_components.user.utils.decorator import authorized
-from user_components.user.service_layer import query
+from user_components.user.views import views
 
 
 async def user_register(request):

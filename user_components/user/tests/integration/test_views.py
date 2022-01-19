@@ -1,10 +1,11 @@
 from __future__ import annotations
+
 import pytest
-from entrypoint import messagebus
+
+from entrypoint import messagebus, settings
 from user_components.user.domain import command
-from user_components.user.views import views
-from entrypoint import settings
 from user_components.user.tests.unit.test_handlers import FakeUnitOfWork
+from user_components.user.views import views
 
 db = settings.settings_factory().pg_dsn
 

@@ -1,9 +1,9 @@
 import asyncio
-from entrypoint import create_app
-from entrypoint import settings
-from sanic import response
-from sanic_session import Session, InMemorySessionInterface
 
+from sanic import response
+from sanic_session import InMemorySessionInterface, Session
+
+from entrypoint import create_app, settings
 
 app = asyncio.run(create_app(settings.settings_factory()))
 app.config.FALLBACK_ERROR_FORMAT = "json"

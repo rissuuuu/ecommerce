@@ -1,11 +1,11 @@
 import json
-from user_components.user.tests.conftest import (
-    insert_dummy_into_user,
-)
-from lib.db_connection import DbConnection
+
 import pytest
-from user_components.user.views import views
+
+from lib.db_connection import DbConnection
 from lib.json_encoder import jsonable_encoder
+from user_components.user.tests.conftest import insert_dummy_into_user
+from user_components.user.views import views
 
 
 @pytest.mark.user

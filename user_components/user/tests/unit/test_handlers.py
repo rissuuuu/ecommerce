@@ -1,7 +1,9 @@
-import pytest
-from lib.repository import Repository
-from entrypoint.messagebus import messagebus
 import logging
+
+import pytest
+
+from entrypoint.messagebus import messagebus
+from lib.repository import Repository
 
 LOGGER = logging.getLogger("logger")
 

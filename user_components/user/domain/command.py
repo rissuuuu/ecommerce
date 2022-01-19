@@ -14,6 +14,11 @@ class AddUser(Command):
     is_seller: bool
 
 
+class AddOtp(Command):
+    email: str
+    otp: str
+
+
 class ActivateUser(Command):
     email: str
     otp: str

@@ -1,4 +1,5 @@
 import pytest
+
 from user_components.user.domain import model
 
 

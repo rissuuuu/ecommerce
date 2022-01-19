@@ -1,7 +1,8 @@
 import logging
 from typing import Union
+
 from entrypoint.messagebus import commands_events_mappings
-from lib import unit_of_work, command, event
+from lib import command, event, unit_of_work
 
 logger = logging.getLogger("werkzeug")
 

@@ -1,9 +1,10 @@
 import os
 import typing
-from pydantic import PostgresDsn
-from dotenv import load_dotenv, find_dotenv
-from lib.settings import AbstractSettings
 
+from dotenv import find_dotenv, load_dotenv
+from pydantic import PostgresDsn
+
+from lib.settings import AbstractSettings
 
 load_dotenv(find_dotenv())
 DB_USER = os.environ.get("DB_USER", "postgres")
@@ -41,9 +42,7 @@ def settings_factory() -> Settings:
             f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}",
         ),
         redis_settings={"host": "127.0.0.0", "port": "6379"},
-        components=[
-            
-        ],
+        components=[],
         alembic_config="alembic.ini",
         secret_key="2#$%^&SDFGHJKLOIUYTR@#$%^&*987654#$%^&*kJHGF3$%^&*"
         "(kertyujnb345678$%^&*NBVCVBNJHGF$%^&*(JH",

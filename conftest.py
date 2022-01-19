@@ -1,6 +1,7 @@
 import pytest
-from entrypoint.settings import settings_factory
 from databases import Database
+
+from entrypoint.settings import settings_factory
 
 
 @pytest.fixture

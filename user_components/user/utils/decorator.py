@@ -1,6 +1,8 @@
+from functools import wraps
+
 import jwt
 from sanic import response
-from functools import wraps
+
 from entrypoint import settings
 
 secret_key = settings.settings_factory().secret_key

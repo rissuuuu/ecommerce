@@ -1,5 +1,6 @@
-import typing
 import abc
+import typing
+
 from lib.db_connection import DbConnection
 
 
