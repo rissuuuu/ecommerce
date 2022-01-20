@@ -7,10 +7,8 @@ from alert_components.notifications.adapters import notifications
 from entrypoint.redis_config.cache import caches
 from lib import unit_of_work
 from user_components.user.adapters.repository import OtpSqlRepository
-from user_components.user.domain import (command, events, exceptions, handler,
-                                         model)
-from user_components.user.service_layer.unit_of_work import \
-    OtpSQLAlchemyUnitofWork
+from user_components.user.domain import command, events, exceptions, handler, model
+from user_components.user.service_layer.unit_of_work import OtpSQLAlchemyUnitofWork
 from user_components.user.utils import password_manager
 
 app = Sanic.get_app()

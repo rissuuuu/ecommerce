@@ -2,7 +2,7 @@ import os
 import typing
 
 from dotenv import find_dotenv, load_dotenv
-from pydantic import PostgresDsn
+from pydantic import EmailStr, PostgresDsn
 
 from lib.settings import AbstractSettings
 
@@ -24,7 +24,7 @@ class Settings(AbstractSettings):
     sparrow_sms_token: str
     sparrow_sms_from: str
     email_host: str
-    email_port: str
+    email_port: int
     page_size: int
     debug: bool
     SIGN_IN_URL: str
@@ -33,6 +33,9 @@ class Settings(AbstractSettings):
     POST_FUNDAMENTAL_URL: str
     SEND_OTP: str
     ACTIVATE_USER: str
+    mail_user: str
+    mail_password: str
+    from_email: EmailStr
 
 
 def settings_factory() -> Settings:
@@ -49,8 +52,8 @@ def settings_factory() -> Settings:
         sms_host="https://api.sparrowsms.com/v2/sms",
         sparrow_sms_token="cH9WDdn9GtgcJXB6cCpF",
         sparrow_sms_from="InfoSMS",
-        email_host="mailtrap_host",
-        email_port="mailtrap_port",
+        email_host="smtp.gmail.com",
+        email_port=465,
         page_size=5,
         debug=True,
         SIGN_IN_URL="http://127.0.0.1:8000/api/v1/login_user",
@@ -59,4 +62,7 @@ def settings_factory() -> Settings:
         ACTIVATE_USER="http://127.0.0.1:8000/api/v1/activate_user",
         RESEND_URL="http://127.0.0.1:8000/api/v1/resend_otp",
         POST_FUNDAMENTAL_URL="http://127.0.0.1:8000/api/v1/fundamental_detail/",
+        mail_user="19mcmi23@gmail.com",
+        mail_password="knlciccalsiqbqyl",
+        from_email="19mcmi23@gmail.com",
     )

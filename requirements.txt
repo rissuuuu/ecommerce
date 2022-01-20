@@ -67,3 +67,4 @@ virtualenv==20.4.7
 websockets==8.1
 Werkzeug==2.0.1
 msgpack==1.0.3
+sanic-mail==0.0.2

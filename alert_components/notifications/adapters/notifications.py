@@ -8,9 +8,11 @@ from lib.notifications import AbstractNotifications
 app_settings = settings.settings_factory()
 
 
-DEFAULT_EMAIL_HOST = app_settings.email_host
-DEFAULT_EMAIL_PORT = app_settings.email_port
-DEFAULT_SMS_HOST = app_settings.sms_host
+EMAIL_HOST = app_settings.email_host
+EMAIL_PORT = app_settings.email_port
+SMS_HOST = app_settings.sms_host
+EMAIL_USER = app_settings.mail_user
+EMAIL_PASSWORD = app_settings.mail_password
 DEBUG = app_settings.debug
 
 
@@ -36,7 +38,7 @@ class SmsServer:
 
 
 class SmsNotifications(AbstractNotifications):
-    def __init__(self, sms_host=DEFAULT_SMS_HOST):
+    def __init__(self, sms_host=SMS_HOST):
         self.server = SmsServer(sms_host)
 
     async def send(self, destination, message):
@@ -45,14 +47,15 @@ class SmsNotifications(AbstractNotifications):
 
 
 class EmailNotifications(AbstractNotifications):
-    def __init__(self, smtp_host=DEFAULT_EMAIL_HOST, port=DEFAULT_EMAIL_PORT):
-        self.server = smtplib.SMTP(smtp_host, port=port)
+    def __init__(self, smtp_host=EMAIL_HOST, port=EMAIL_PORT):
+        self.server = smtplib.SMTP_SSL(smtp_host, port=port)
         self.server.noop()
+        self.server.login(EMAIL_USER,EMAIL_PASSWORD)
 
     async def send(self, destination, message):
-        msg = message
         self.server.sendmail(
-            from_addr="allocations@example.com",
+            from_addr=EMAIL_USER,
             to_addrs=[destination],
-            msg=msg,
+            msg=message,
         )
+        self.server.close()
